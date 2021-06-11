@@ -4,14 +4,9 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\CategoryService;
 
 class HomeController extends Controller
 {
-    public function __construct(
-        CategoryService $categoryService
-    ) {}
-
     /**
      * @Route("/", name="home", methods={"GET"})
      */
