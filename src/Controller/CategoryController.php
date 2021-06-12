@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Command\CategoryCreateCommand;
+use App\Command\CategoryUpdateCommand;
 use App\Service\CategoryService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +33,11 @@ class CategoryController extends Controller
      */
     public function find(int $id): Response
     {
-
+        try {
+            return $this->success($this->categoryService->find($id)->toArray());
+        } catch (\Exception $e) {
+            return $this->error($e);
+        }
     }
 
     /**
@@ -40,7 +45,12 @@ class CategoryController extends Controller
      */
     public function update(int $id, Request $request): Response
     {
-
+        try {
+            $data = json_decode($request->getContent());
+            return $this->success($this->categoryService->update(new CategoryUpdateCommand($id, $data->name))->toArray());
+        } catch (\Exception $e) {
+            return $this->error($e);
+        }
     }
 
     /**
@@ -48,7 +58,11 @@ class CategoryController extends Controller
      */
     public function delete(int $id): Response
     {
-
+        try {
+            return $this->success($this->categoryService->delete($id));
+        } catch (\Exception $e) {
+            return $this->error($e);
+        }
     }
 
     /**
@@ -56,6 +70,10 @@ class CategoryController extends Controller
      */
     public function list(): Response
     {
-
+        try {
+            return $this->success($this->categoryService->list());
+        } catch (\Exception $e) {
+            return $this->error($e);
+        }
     }
 }
